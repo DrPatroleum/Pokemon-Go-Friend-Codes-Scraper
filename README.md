@@ -1,13 +1,17 @@
 # Pokemon Go Friend Codes Scraper
 
-This Python script scrapes Pokémon Go friend codes from a specified website and stores them in an Excel file. The script continuously fetches new codes, checks for duplicates, and updates the Excel file with unique codes.
+This Python script scrapes Pokémon Go friend codes along with additional friend details from a specified website and stores them in an Excel file. The script continuously monitors the page for new entries, extracts friend codes together with trainer names, levels, and locations, and updates the Excel file with only unique entries.
 
 ## Features
 
 - **Web Scraping:** Uses `requests` to fetch HTML content and `BeautifulSoup` to parse it.
-- **Regex Matching:** Extracts friend codes using regular expressions.
-- **Excel File Handling:** Reads and writes friend codes to an Excel file using `openpyxl`.
-- **Continuous Monitoring:** Periodically checks for new codes and updates the Excel file.
+- **Data Extraction:** Leverages regular expressions and HTML parsing to extract friend codes, trainer names, levels, and locations.
+- **Excel File Handling:** Reads from and writes to an Excel file using `openpyxl`, ensuring no duplicate entries are stored.
+- **Continuous Monitoring:** Periodically checks for new friend entries on the website, updates the Excel file in real time, and logs added entries with details such as:
+  - Trainer name
+  - Level
+  - Location (e.g., Suffolk, United Kingdom)
+- **User Feedback:** Displays notifications in the console whenever a new friend entry is added, along with the current total count.
 
 ## Requirements
 
