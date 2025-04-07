@@ -20,7 +20,8 @@ This Python script scrapes Pokémon Go friend codes along with additional friend
 - `beautifulsoup4`
 - `openpyxl`
 
-You can install the required libraries using pip:
+## Plans
 
-```sh
-pip install requests beautifulsoup4 openpyxl
+- creating a large Pokémon Go player database categorized by country
+- generating QR codes (e.g., using qrcode + Pillow) for each friend code
+- a simple GUI (e.g., Tkinter, PyQt, Gradio) with buttons like “Start,” “Stop,” “Export,” “Filter” — or a web-based frontend
