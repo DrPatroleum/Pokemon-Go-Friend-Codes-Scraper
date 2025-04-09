@@ -12,6 +12,7 @@ This Python script scrapes Pokémon Go friend codes along with additional friend
   - Level
   - Location (e.g., Suffolk, United Kingdom)
 - **User Feedback:** Displays notifications in the console whenever a new friend entry is added, along with the current total count.
+- **NEW! Generating QR Codes:** Generating QR codes for each friend code
 
 ## Requirements
 
@@ -23,5 +24,4 @@ This Python script scrapes Pokémon Go friend codes along with additional friend
 ## Plans
 
 - creating a large Pokémon Go player database categorized by country
-- generating QR codes (e.g., using qrcode + Pillow) for each friend code
 - a simple GUI (e.g., Tkinter, PyQt, Gradio) with buttons like “Start,” “Stop,” “Export,” “Filter” — or a web-based frontend
