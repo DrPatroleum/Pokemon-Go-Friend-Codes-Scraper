@@ -2,12 +2,14 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import time
+import qrcode
 import os
 from datetime import datetime
 from openpyxl import Workbook, load_workbook
 
 URL = "https://pokemongo.gishan.net/friends/codes/"
 FILE_PATH = "pokemon_friend_codes.xlsx"
+QR_PATH = r"C:\Users\USER\Desktop"
 
 def fetch_page(url):
     response = requests.get(url)
@@ -56,7 +58,7 @@ def read_existing_friend_codes(file_path):
     workbook = load_workbook(file_path)
     sheet = workbook.active
     friend_codes = set()
-    # Zakładamy, że w pierwszym wierszu są nagłówki
+    # W pierwszym wierszu są nagłówki
     for row in sheet.iter_rows(min_row=2, values_only=True):
         if row[2]:
             friend_codes.add(row[2])
@@ -69,7 +71,7 @@ def write_new_friends(file_path, friends):
     else:
         workbook = Workbook()
         sheet = workbook.active
-        # Dodajemy nagłówki kolumn
+        # Nagłówki kolumn
         sheet.append(["Name", "Level", "Code", "Location"])
     
     existing_codes = read_existing_friend_codes(file_path)
@@ -77,24 +79,51 @@ def write_new_friends(file_path, friends):
     for friend in friends:
         if friend["code"] not in existing_codes:
             sheet.append([friend["name"], friend["level"], friend["code"], friend["location"]])
-            print(f"Added friend {friend['name']} || lvl {friend['level']} || {friend['location']}")
+            print(f"Added friend \033[91m{friend['name']}\033[0m || lvl \033[35m{friend['level']}\033[0m || \033[32m{friend['location']}\033[0m")
+            #generowanie QR kodu
+            generate_qr(friend["code"])
+            time.sleep(1)
     
     workbook.save(file_path)
 
+def generate_unique_filename(base_filename, qr_path):
+    unique_filename = base_filename
+    counter = 1
+    while os.path.exists(os.path.join(qr_path, unique_filename)):
+        unique_filename = f"qr_{counter}.jpg"
+        counter += 1
+    return os.path.join(qr_path, unique_filename)
+
+def generate_qr(data):
+    qr_path = os.path.join(QR_PATH, "QR POGO CODES")
+    if not os.path.exists(qr_path):
+        os.makedirs(qr_path)
+        
+    qr_path = generate_unique_filename("qr_0.jpg", qr_path)
+
+    qr = qrcode.QRCode(
+        version=None,
+        error_correction=qrcode.constants.ERROR_CORRECT_H,
+        box_size=10,
+        border=2)
+
+    qr.add_data(data)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color='black', back_color='white')
+    img.save(qr_path)
+
 def main():
     while True:
-        # Odświeżamy stronę
         requests.get(URL)
-        time.sleep(2)  # krótka pauza by strona się w pełni załadowała
+        time.sleep(2)
 
         html = fetch_page(URL)
         friends = extract_friend_info(html)
         write_new_friends(FILE_PATH, friends)
         total_friends = len(read_existing_friend_codes(FILE_PATH))
         
-        # Pobieramy aktualny czas
         current_time = datetime.now().strftime("%H:%M:%S")
-        print(f"{current_time} >> Pokemon GO friends ({total_friends} in total)")
+        print(f"\033[34m{current_time}\033[0m >>> \033[36m{total_friends}\033[0m Pokemon GO friends collected!")
         
         time.sleep(100)
 
