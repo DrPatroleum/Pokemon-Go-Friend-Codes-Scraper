@@ -10,6 +10,7 @@ This Python script scrapes Pokémon Go friend codes along with additional friend
 - **Continuous Monitoring:** Periodically checks for new friend entries on the website, updates the Excel file in real time, and logs added entries with details such as:
   - Trainer name
   - Level
+  - Team (Valor / Mystic / Instinct)
   - Location (e.g., Suffolk, United Kingdom)
 - **User Feedback:** Displays notifications in the console whenever a new friend entry is added, along with the current total count.
 - **NEW! Generating QR Codes:** Generating QR codes for each friend code
@@ -23,5 +24,5 @@ This Python script scrapes Pokémon Go friend codes along with additional friend
 
 ## Plans
 
-- creating a large Pokémon Go player database categorized by country
+- creating a large Pokémon Go player database categorized by country or team
 - a simple GUI (e.g., Tkinter, PyQt, Gradio) with buttons like “Start,” “Stop,” “Export,” “Filter” — or a web-based frontend
